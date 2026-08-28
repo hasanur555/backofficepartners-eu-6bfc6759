@@ -739,6 +739,7 @@ function Configurator() {
   const [standaloneIds, setStandaloneIds] = useState<string[]>([]);
   const [clientUrl, setClientUrl] = useState("");
   const [clientNotes, setClientNotes] = useState("");
+  const [showProposal, setShowProposal] = useState(false);
 
   const tier = TIERS.find((t) => t.id === tierId)!;
   const coverage = COVERAGE.find((c) => c.id === coverageId)!;
