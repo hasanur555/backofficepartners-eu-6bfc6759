@@ -743,7 +743,7 @@ function Configurator() {
   const modules = MODULES.filter((m) => moduleIds.includes(m.id));
   const standalones = STANDALONE.filter((s) => standaloneIds.includes(s.id));
 
-  const total = useMemo(() => {
+  const subtotal = useMemo(() => {
     if (mode === "retainer") {
       const base = tier.price * coverage.mult;
       const add = modules.reduce((s, m) => s + m.price, 0);
@@ -751,6 +751,10 @@ function Configurator() {
     }
     return standalones.reduce((s, x) => s + x.price, 0);
   }, [mode, tier, coverage, modules, standalones]);
+
+  const discount = subtotal > 0 ? Math.min(LOW_SEASON_DISCOUNT, subtotal) : 0;
+  const total = subtotal - discount;
+
 
   const proposal = useMemo(() => {
     const lines = [
