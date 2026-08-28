@@ -769,6 +769,8 @@ function Configurator() {
       `• Configuration Type: ${mode === "retainer" ? "Custom Retainer" : "Standalone Project"}`,
       `• Booking Volume Limit: ${mode === "retainer" ? tier.label : "Standalone tasks (see below)"}`,
       `• Coverage Schedule: ${mode === "retainer" ? coverage.label : "One-time project"}`,
+      `• Subtotal: €${subtotal.toLocaleString()}`,
+      `• Low Season Discount: -€${discount.toLocaleString()}`,
       `• Configured Price Estimate: €${total.toLocaleString()}${mode === "retainer" ? " / month" : " one-time"}`,
       "",
       "SELECTED SERVICE CONFIGURATION:",
