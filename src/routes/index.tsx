@@ -564,7 +564,7 @@ function BrandMatrix() {
   return (
     <section className="mx-auto max-w-6xl px-5 py-16">
       <SectionHeading
-        eyebrow="Performance split"
+        eyebrow="Performance split" accent="var(--sky)"
         title="Managing multi-brand portfolios at scale"
         subtitle="Real numbers from parent accounts with distinct sub-brands running under one operations desk."
       />
@@ -590,7 +590,7 @@ function WhyUsMatrix() {
     <section id="why-us" className="border-y border-white/5 bg-white/[0.02] py-20">
       <div className="mx-auto max-w-6xl px-5">
         <SectionHeading
-          eyebrow="Human-first framework"
+          eyebrow="Human-first framework" accent="var(--violet)"
           title="Why rigid automation & AI auto-responses kill your listings"
           subtitle="Every traveler review has a soul. Guests spot generic AI replies instantly — and OTA algorithms are engineered to de-rank automated profiles in favor of genuine engagement."
         />
@@ -617,7 +617,7 @@ function Services() {
   return (
     <section id="services" className="mx-auto max-w-6xl px-5 py-20">
       <SectionHeading
-        eyebrow="Services"
+        eyebrow="Services" accent="var(--emerald)"
         title="What we do for you"
         subtitle="Pick a single service or bundle several. Every engagement starts with a short discovery call so we can scope the work honestly."
       />
@@ -701,7 +701,7 @@ function Research() {
   return (
     <section id="research" className="mx-auto max-w-6xl px-5 py-20">
       <SectionHeading
-        eyebrow="Industry research"
+        eyebrow="Industry research" accent="var(--rose)"
         title="Where operators quietly leak revenue"
         subtitle="Aggregated from audits we ran across tour operators, DMCs and boutique hotels in the last 12 months."
       />
@@ -739,6 +739,7 @@ function Configurator() {
   const [standaloneIds, setStandaloneIds] = useState<string[]>([]);
   const [clientUrl, setClientUrl] = useState("");
   const [clientNotes, setClientNotes] = useState("");
+  const [showProposal, setShowProposal] = useState(false);
 
   const tier = TIERS.find((t) => t.id === tierId)!;
   const coverage = COVERAGE.find((c) => c.id === coverageId)!;
@@ -798,7 +799,7 @@ function Configurator() {
     <section id="configurator" className="border-y border-white/5 bg-white/[0.02] py-20">
       <div className="mx-auto max-w-6xl px-5">
         <SectionHeading
-          eyebrow="Configurator"
+          eyebrow="Configurator" accent="var(--amber)"
           title="Build your custom operational plan"
           subtitle="Two modes: monthly retainer or standalone project. Live pricing, and a copy-ready proposal you can email us."
         />
@@ -913,34 +914,77 @@ function Configurator() {
           </Card>
 
           {/* Output panel */}
-          <Card className="glass border-white/10">
+          <Card className="glass border-[var(--amber)]/25">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 font-display text-lg">
-                <FileText className="h-5 w-5 text-[var(--teal-glow)]" /> Live estimate & proposal
+                <FileText className="h-5 w-5 text-[var(--amber)]" /> Live estimate & proposal
               </CardTitle>
-              <CardDescription>Copy this or send it directly to us.</CardDescription>
+              <CardDescription>A clean summary of your configuration — copy it or email it to us.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="rounded-xl border border-[var(--teal-glow)]/40 bg-[var(--teal)]/10 p-5">
-                <div className="text-xs uppercase tracking-widest text-muted-foreground">Estimated total</div>
+            <CardContent className="space-y-5">
+              {/* Summary lines */}
+              <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm">
+                <div className="flex items-center justify-between py-1.5">
+                  <span className="text-muted-foreground">Plan</span>
+                  <span className="font-medium">{mode === "retainer" ? tier.label : "Standalone project"}</span>
+                </div>
+                <div className="flex items-center justify-between border-t border-white/5 py-1.5">
+                  <span className="text-muted-foreground">Coverage</span>
+                  <span className="font-medium">{mode === "retainer" ? coverage.label : "One-time delivery"}</span>
+                </div>
+                <div className="border-t border-white/5 pt-2">
+                  <div className="text-xs uppercase tracking-widest text-muted-foreground">Selected items</div>
+                  <ul className="mt-2 space-y-1.5">
+                    {(mode === "retainer" ? modules : standalones).length === 0 && (
+                      <li className="text-muted-foreground">Nothing selected yet.</li>
+                    )}
+                    {mode === "retainer"
+                      ? modules.map((m) => (
+                          <li key={m.id} className="flex items-center justify-between gap-3">
+                            <span className="flex items-center gap-2">
+                              <span className="h-1.5 w-1.5 rounded-full bg-[var(--emerald)]" />
+                              {m.label}
+                            </span>
+                            <span className="tabular-nums text-muted-foreground">€{m.price}/mo</span>
+                          </li>
+                        ))
+                      : standalones.map((s) => (
+                          <li key={s.id} className="flex items-center justify-between gap-3">
+                            <span className="flex items-center gap-2">
+                              <span className="h-1.5 w-1.5 rounded-full bg-[var(--sky)]" />
+                              {s.label}
+                            </span>
+                            <span className="tabular-nums text-muted-foreground">€{s.price}</span>
+                          </li>
+                        ))}
+                  </ul>
+                </div>
+              </div>
+
+              {/* Totals */}
+              <div className="rounded-xl border border-[var(--amber)]/35 bg-[var(--amber)]/10 p-5">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">Subtotal</span>
+                  <span className="tabular-nums">€{subtotal.toLocaleString()}</span>
+                </div>
                 {discount > 0 && (
-                  <div className="mt-1 flex items-center gap-2 text-sm">
-                    <span className="text-muted-foreground line-through">€{subtotal.toLocaleString()}</span>
-                    <span className="rounded-full border border-[var(--teal-glow)]/40 bg-[var(--teal)]/15 px-2 py-0.5 text-xs font-semibold text-[var(--teal-glow)]">
-                      Low season discount −€{discount}
-                    </span>
+                  <div className="mt-1 flex items-center justify-between text-sm">
+                    <span className="text-[var(--emerald)]">Low season discount</span>
+                    <span className="tabular-nums text-[var(--emerald)]">−€{discount}</span>
                   </div>
                 )}
-                <div className="font-display text-4xl font-bold text-[var(--teal-glow)]">
-                  €{total.toLocaleString()}
-                  <span className="ml-2 text-sm text-muted-foreground font-sans">{mode === "retainer" ? "/ month" : "one-time"}</span>
+                <div className="mt-3 flex items-end justify-between border-t border-white/10 pt-3">
+                  <span className="text-xs uppercase tracking-widest text-muted-foreground">Estimated total</span>
+                  <span className="font-display text-4xl font-bold text-[var(--amber)]">
+                    €{total.toLocaleString()}
+                    <span className="ml-2 font-sans text-sm text-muted-foreground">{mode === "retainer" ? "/ month" : "one-time"}</span>
+                  </span>
                 </div>
-
               </div>
-              <Textarea readOnly value={proposal} rows={14} className="font-mono text-xs" />
+
               <div className="flex flex-wrap gap-3">
                 <Button asChild className="btn-teal">
-                  <a href={mailto}>Compile proposal & request call <ArrowRight className="h-4 w-4" /></a>
+                  <a href={mailto}>Send proposal & request call <ArrowRight className="h-4 w-4" /></a>
                 </Button>
                 <Button
                   variant="outline"
@@ -949,7 +993,13 @@ function Configurator() {
                 >
                   Copy proposal
                 </Button>
+                <Button variant="ghost" onClick={() => setShowProposal((v) => !v)} className="text-muted-foreground">
+                  {showProposal ? "Hide details" : "View full text"}
+                </Button>
               </div>
+
+              {showProposal && <Textarea readOnly value={proposal} rows={14} className="font-mono text-xs" />}
+
             </CardContent>
           </Card>
         </div>
@@ -974,7 +1024,7 @@ function ArticlesHub() {
       />
       <div className="relative mx-auto max-w-6xl px-5">
         <SectionHeading
-          eyebrow="Knowledge base & SEO guides"
+          eyebrow="Knowledge base & SEO guides" accent="var(--emerald)"
           title="Operational insights for Bókun, GetYourGuide & OTA operators"
           subtitle="Practical guides on Bókun setup, OTA listing SEO, channel manager audits, and double-booking prevention — written by the people who run these systems every day."
         />
@@ -1020,7 +1070,7 @@ function WhyUs() {
   return (
     <section className="border-y border-white/5 bg-white/[0.02] py-20">
       <div className="mx-auto max-w-6xl px-5">
-        <SectionHeading eyebrow="Why us" title="The logic behind hiring a back-office partner" />
+        <SectionHeading eyebrow="Why us" accent="var(--violet)" title="The logic behind hiring a back-office partner" />
         <div className="mt-10 grid gap-5 md:grid-cols-3">
           {WHY_US.map((w) => {
             const Icon = w.icon;
@@ -1095,7 +1145,7 @@ function Booking() {
 
   return (
     <section id="book" className="mx-auto max-w-6xl px-5 py-20">
-      <SectionHeading eyebrow="Book a call" title="Pick a time — we'll take it from there" subtitle="20-minute discovery call. If we're a fit, we send a scoped proposal and a clean invoice. No cards, no gateway. Bank transfer only." />
+      <SectionHeading eyebrow="Book a call" accent="var(--sky)" title="Pick a time — we'll take it from there" subtitle="20-minute discovery call. If we're a fit, we send a scoped proposal and a clean invoice. No cards, no gateway. Bank transfer only." />
       <div className="mt-10 grid gap-6 md:grid-cols-2">
         <Card className="glass border-white/10">
           <CardHeader>
@@ -1180,7 +1230,7 @@ function Careers() {
   return (
     <section id="careers" className="border-t border-white/5 bg-white/[0.02] py-20">
       <div className="mx-auto max-w-4xl px-5">
-        <SectionHeading eyebrow="Careers" title="Join our remote operations bench" subtitle="We're hiring elite travel-ops freelancers — Bókun architects, OTA channel managers, guest support agents and procurement operators." />
+        <SectionHeading eyebrow="Careers" accent="var(--amber)" title="Join our remote operations bench" subtitle="We're hiring elite travel-ops freelancers — Bókun architects, OTA channel managers, guest support agents and procurement operators." />
         {submitted ? (
           <div id="apply-success" className="mt-10 glass rounded-2xl p-8 text-center">
             <CheckCircle2 className="mx-auto h-10 w-10 text-[var(--emerald)]" />
@@ -1236,7 +1286,7 @@ function PartnerLogos() {
     <section id="partners" className="border-y border-white/5 bg-white/[0.02] py-16">
       <div className="mx-auto max-w-6xl px-5">
         <SectionHeading
-          eyebrow="Partners & clients"
+          eyebrow="Partners & clients" accent="var(--teal-glow)"
           title="Technology and online operational support"
           subtitle="We solve OTA and tourism operators' platform problems — and build custom software around each company's workflow."
         />
@@ -1301,7 +1351,7 @@ function RequestService() {
   return (
     <section id="request" className="mx-auto max-w-4xl px-5 py-20">
       <SectionHeading
-        eyebrow="Request a service"
+        eyebrow="Request a service" accent="var(--rose)"
         title="Tell us what you need"
         subtitle="Any query — platform setup, audit, marketing or custom software. We reply with scope and a fixed price, then invoice after a short meeting."
       />
@@ -1369,12 +1419,30 @@ function Footer() {
   );
 }
 
-function SectionHeading({ eyebrow, title, subtitle }: { eyebrow: string; title: string; subtitle?: string }) {
+function SectionHeading({
+  eyebrow,
+  title,
+  subtitle,
+  accent = "var(--teal-glow)",
+}: {
+  eyebrow: string;
+  title: string;
+  subtitle?: string;
+  accent?: string;
+}) {
   return (
     <div className="mx-auto max-w-2xl text-center">
-      <div className="text-xs font-semibold uppercase tracking-widest text-[var(--teal-glow)]">{eyebrow}</div>
-      <h2 className="mt-2 font-display text-3xl font-bold md:text-4xl">{title}</h2>
+      <div
+        className="mx-auto inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-widest"
+        style={{ color: accent, borderColor: `color-mix(in oklab, ${accent} 40%, transparent)`, background: `color-mix(in oklab, ${accent} 12%, transparent)` }}
+      >
+        <span className="h-1.5 w-1.5 rounded-full" style={{ background: accent }} />
+        {eyebrow}
+      </div>
+      <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">{title}</h2>
+      <div className="mx-auto mt-3 h-px w-24" style={{ background: `linear-gradient(90deg, transparent, ${accent}, transparent)` }} />
       {subtitle && <p className="mt-3 text-sm text-muted-foreground md:text-base">{subtitle}</p>}
     </div>
   );
 }
+
