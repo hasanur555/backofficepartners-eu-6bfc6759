@@ -889,39 +889,52 @@ function ArticlesHub() {
   const [openId, setOpenId] = useState<string | null>(null);
   const open = ARTICLES.find((a) => a.id === openId) || null;
   return (
-    <section id="articles" className="mx-auto max-w-6xl px-5 py-20">
-      <SectionHeading
-        eyebrow="Knowledge base"
-        title="Operational insights for travel operators"
-        subtitle="Short, technical, no fluff. Written by the people who run these systems every day."
+    <section
+      id="articles"
+      className="relative border-y border-[var(--emerald)]/15 bg-[color:var(--emerald)]/[0.04] py-20"
+    >
+      <div
+        className="pointer-events-none absolute inset-0 grid-noise opacity-30"
+        aria-hidden
       />
-      <div className="mt-10 grid gap-5 md:grid-cols-3">
-        {ARTICLES.map((a) => (
-          <button key={a.id} onClick={() => setOpenId(a.id)} className="glass rounded-xl p-5 text-left transition hover:border-[var(--teal-glow)]/40">
-            <BookOpen className="h-5 w-5 text-[var(--teal-glow)]" />
-            <h3 className="mt-3 font-display text-lg font-semibold">{a.title}</h3>
-            <p className="mt-2 text-sm text-muted-foreground">{a.excerpt}</p>
-            <div className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-[var(--teal-glow)]">
-              View specs <ArrowRight className="h-3.5 w-3.5" />
-            </div>
-          </button>
-        ))}
-      </div>
-      <Dialog open={!!open} onOpenChange={(v) => !v && setOpenId(null)}>
-        <DialogContent className="max-w-2xl bg-[#0b1329] border-white/10">
-          {open && (
-            <>
-              <DialogHeader>
-                <DialogTitle className="font-display text-2xl">{open.title}</DialogTitle>
-                <DialogDescription>{open.excerpt}</DialogDescription>
-              </DialogHeader>
-              <div className="mt-2 max-h-[60vh] overflow-y-auto whitespace-pre-line text-sm text-muted-foreground leading-relaxed">
-                {open.body}
+      <div className="relative mx-auto max-w-6xl px-5">
+        <SectionHeading
+          eyebrow="Knowledge base & SEO guides"
+          title="Operational insights for Bókun, GetYourGuide & OTA operators"
+          subtitle="Practical guides on Bókun setup, OTA listing SEO, channel manager audits, and double-booking prevention — written by the people who run these systems every day."
+        />
+        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {ARTICLES.map((a) => (
+            <button
+              key={a.id}
+              onClick={() => setOpenId(a.id)}
+              className="glass rounded-xl p-5 text-left transition hover:border-[var(--teal-glow)]/50 hover:-translate-y-0.5"
+            >
+              <BookOpen className="h-5 w-5 text-[var(--teal-glow)]" />
+              <h3 className="mt-3 font-display text-lg font-semibold leading-snug">{a.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{a.excerpt}</p>
+              <div className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-[var(--teal-glow)]">
+                Read guide <ArrowRight className="h-3.5 w-3.5" />
               </div>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
+            </button>
+          ))}
+        </div>
+        <Dialog open={!!open} onOpenChange={(v) => !v && setOpenId(null)}>
+          <DialogContent className="max-w-2xl bg-[#0b1329] border-white/10">
+            {open && (
+              <>
+                <DialogHeader>
+                  <DialogTitle className="font-display text-2xl">{open.title}</DialogTitle>
+                  <DialogDescription>{open.excerpt}</DialogDescription>
+                </DialogHeader>
+                <div className="mt-2 max-h-[60vh] overflow-y-auto whitespace-pre-line text-sm text-muted-foreground leading-relaxed">
+                  {open.body}
+                </div>
+              </>
+            )}
+          </DialogContent>
+        </Dialog>
+      </div>
     </section>
   );
 }
