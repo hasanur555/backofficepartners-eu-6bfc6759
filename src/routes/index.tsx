@@ -923,10 +923,19 @@ function Configurator() {
             <CardContent className="space-y-4">
               <div className="rounded-xl border border-[var(--teal-glow)]/40 bg-[var(--teal)]/10 p-5">
                 <div className="text-xs uppercase tracking-widest text-muted-foreground">Estimated total</div>
+                {discount > 0 && (
+                  <div className="mt-1 flex items-center gap-2 text-sm">
+                    <span className="text-muted-foreground line-through">€{subtotal.toLocaleString()}</span>
+                    <span className="rounded-full border border-[var(--teal-glow)]/40 bg-[var(--teal)]/15 px-2 py-0.5 text-xs font-semibold text-[var(--teal-glow)]">
+                      Low season discount −€{discount}
+                    </span>
+                  </div>
+                )}
                 <div className="font-display text-4xl font-bold text-[var(--teal-glow)]">
                   €{total.toLocaleString()}
                   <span className="ml-2 text-sm text-muted-foreground font-sans">{mode === "retainer" ? "/ month" : "one-time"}</span>
                 </div>
+
               </div>
               <Textarea readOnly value={proposal} rows={14} className="font-mono text-xs" />
               <div className="flex flex-wrap gap-3">
