@@ -42,22 +42,80 @@ import logoPremium from "@/assets/partners/Primium.jpg";
 import logoSrCity from "@/assets/partners/S_R_CITY.jpg";
 import logoHelloItalia from "@/assets/partners/web-logo-horizontal.png";
 
+const SITE_URL = "https://backofficepartners-eu.lovable.app";
+const PAGE_TITLE = "OTA & Bókun Back Office Support for Travel Agencies";
+const PAGE_DESCRIPTION =
+  "Back office and OTA support for travel agencies, tour operators and DMCs: GetYourGuide, Viator and Booking.com listing management, Bókun setup, channel manager audits, PMS operations and custom travel software. Per-service pricing, invoice billing.";
+
 export const Route = createFileRoute("/")({
   component: Home,
   head: () => ({
     meta: [
-      { title: "Travel BackOffice Partners — OTA, PMS & Channel Operations Experts" },
+      { title: PAGE_TITLE },
+      { name: "description", content: PAGE_DESCRIPTION },
       {
-        name: "description",
+        name: "keywords",
         content:
-          "External travel operations department for tour operators, DMCs and boutique hotels. Managed OTA listings, Bókun, channel manager audits and human-first guest support. Per-service pricing, invoice billing.",
+          "OTA management, Bókun setup, GetYourGuide listing optimisation, Viator listing management, Booking.com extranet support, channel manager audit, travel agency back office, tour operator outsourcing, DMC operations support, property management software support, custom travel software",
       },
-      { property: "og:title", content: "Travel BackOffice Partners — OTA, PMS & Channel Operations" },
-      { property: "og:description", content: "We become your external travel operations department. Human-first back-office team for OTAs, PMS and channel managers." },
+      { property: "og:title", content: PAGE_TITLE },
+      { property: "og:description", content: PAGE_DESCRIPTION },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: SITE_URL + "/" },
+      { property: "og:site_name", content: "Travel BackOffice Partners" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: PAGE_TITLE },
+      { name: "twitter:description", content: PAGE_DESCRIPTION },
+      { name: "robots", content: "index, follow, max-image-preview:large" },
+    ],
+    links: [{ rel: "canonical", href: SITE_URL + "/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "ProfessionalService",
+              "@id": SITE_URL + "/#organization",
+              name: "Travel BackOffice Partners",
+              url: SITE_URL + "/",
+              email: "contact@backofficepartners.eu",
+              description: PAGE_DESCRIPTION,
+              areaServed: "Worldwide",
+              serviceType: [
+                "OTA platform management",
+                "Bókun and channel manager setup",
+                "Channel manager audit",
+                "Property management software operations",
+                "Travel marketing",
+                "Custom travel software development",
+              ],
+              knowsAbout: [
+                "Bókun",
+                "GetYourGuide",
+                "Viator",
+                "Booking.com",
+                "Expedia",
+                "Airbnb Experiences",
+                "channel managers",
+                "property management systems",
+              ],
+            },
+            {
+              "@type": "WebSite",
+              "@id": SITE_URL + "/#website",
+              url: SITE_URL + "/",
+              name: "Travel BackOffice Partners",
+              publisher: { "@id": SITE_URL + "/#organization" },
+            },
+          ],
+        }),
+      },
     ],
   }),
 });
+
 
 const CONTACT_EMAIL = "contact@backofficepartners.eu";
 const CAREERS_EMAIL = CONTACT_EMAIL;
@@ -1179,16 +1237,20 @@ function PartnerLogos() {
           </div>
           <div className="glass rounded-2xl p-6">
             <h3 className="font-display text-lg font-semibold">Digital operational support</h3>
-            <p className="mt-1 text-xs text-muted-foreground">Brands taking back-office support from us.</p>
+            <p className="mt-1 text-xs text-muted-foreground">A selection of brands taking back-office support from us — not the full list.</p>
             <div className="mt-6 grid grid-cols-2 gap-4">
               {SUPPORT_CLIENTS.map((p) => (
                 <div key={p.name} className="flex h-24 items-center justify-center rounded-xl bg-white/90 p-4">
                   <img src={p.logo} alt={`${p.name} logo`} loading="lazy" className="max-h-16 w-auto object-contain" />
                 </div>
               ))}
+              <div className="col-span-2 flex h-16 items-center justify-center rounded-xl border border-dashed border-white/15 px-4 text-center text-xs font-medium text-muted-foreground">
+                + more tour operators, DMCs and city-tour brands across Europe (names under NDA)
+              </div>
             </div>
           </div>
         </div>
+
         <div className="mt-8 text-center">
           <a href={SERVICE_PDF} download className="btn-outline-teal inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-semibold">
             <Download className="h-4 w-4" /> Download service catalogue (PDF)
