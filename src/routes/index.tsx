@@ -1369,12 +1369,30 @@ function Footer() {
   );
 }
 
-function SectionHeading({ eyebrow, title, subtitle }: { eyebrow: string; title: string; subtitle?: string }) {
+function SectionHeading({
+  eyebrow,
+  title,
+  subtitle,
+  accent = "var(--teal-glow)",
+}: {
+  eyebrow: string;
+  title: string;
+  subtitle?: string;
+  accent?: string;
+}) {
   return (
     <div className="mx-auto max-w-2xl text-center">
-      <div className="text-xs font-semibold uppercase tracking-widest text-[var(--teal-glow)]">{eyebrow}</div>
-      <h2 className="mt-2 font-display text-3xl font-bold md:text-4xl">{title}</h2>
+      <div
+        className="mx-auto inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-widest"
+        style={{ color: accent, borderColor: `color-mix(in oklab, ${accent} 40%, transparent)`, background: `color-mix(in oklab, ${accent} 12%, transparent)` }}
+      >
+        <span className="h-1.5 w-1.5 rounded-full" style={{ background: accent }} />
+        {eyebrow}
+      </div>
+      <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">{title}</h2>
+      <div className="mx-auto mt-3 h-px w-24" style={{ background: `linear-gradient(90deg, transparent, ${accent}, transparent)` }} />
       {subtitle && <p className="mt-3 text-sm text-muted-foreground md:text-base">{subtitle}</p>}
     </div>
   );
 }
+
