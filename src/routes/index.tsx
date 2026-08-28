@@ -477,7 +477,7 @@ function AnnouncementBar() {
   return (
     <div className="bg-[var(--teal)]/15 border-b border-[var(--teal-glow)]/30 text-center text-xs py-2 px-4 text-[color:var(--teal-glow)]">
       <Sparkles className="inline h-3.5 w-3.5 mr-1.5 -mt-0.5" />
-      Active Operations Peak: Now onboarding selected global tour operators and DMCs for late seasonal coverage.
+      Low Season Offer: €50 off every retainer and standalone project — now onboarding selected global tour operators and DMCs.
     </div>
   );
 }
