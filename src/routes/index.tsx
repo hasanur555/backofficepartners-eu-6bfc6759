@@ -1,4 +1,5 @@
-import { PartnerLogos } from "@/components/PartnerLogos";import { useMemo, useState } from "react";
+import { createFileRoute } from '@tanstack/react-router'
+import { useMemo, useState } from "react";
 import {
   ArrowRight,
   CheckCircle2,
