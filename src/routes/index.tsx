@@ -262,54 +262,123 @@ const STANDALONE = [
   { id: "rescue", label: "Previous listing audit & rescue", price: 450, unit: "flat" },
 ];
 
-/* Articles */
+/* Articles — SEO-targeted operational content (Bókun, GetYourGuide, Viator, OTA, channel manager) */
 const ARTICLES = [
   {
     id: "art1",
-    title: "Viator listing placement & organic SEO optimization",
-    excerpt: "The three programmatic signals OTA algorithms use to rank listings — and how to win them.",
-    body: `To rank consistently on Page 1 of Viator and GetYourGuide, operators must optimize for three programmatic signals: Conversion Velocity, Response Latency, and Pricing Matrix Completeness.
+    title: "Bókun setup & optimization: the complete configuration checklist",
+    excerpt:
+      "Bókun booking software setup, resource pools, departure rules, and OTA distribution — a practical guide for tour operators.",
+    body: `Bókun is the reservation engine most modern tour and activity operators build on. But a default Bókun setup leaks margin from day one. This checklist covers the configuration that actually protects revenue.
 
-1. Inquiry Response Latency
-OTA crawlers monitor response speeds down to the millisecond. Replying to pre-booking messages within 15 minutes delivers an immediate organic lift. Delayed responses tell the system a listing cannot fulfill volume, and rankings drop.
+1. Resource & Capacity Modeling
+Every product departure must bind to a resource pool with hard seat limits, guide roster shifts, and B2B ticket allotments. Without this, Bókun's availability logic treats unlimited capacity as normal — and overbookings start in week one.
 
-2. Pricing Parity & Structural Completeness
-Every optimized listing must carry full age-tier configuration (adult, youth, child, infant), transparent group logic, and identical rate parity across public channels. This signals account health.
+2. Departure Rules & Cutoff Windows
+Set automated booking cutoff windows (e.g. 24h for walking tours, 2h for skip-the-line monument tickets) so last-minute spikes never break on-site coordination.
 
-3. Visual Content CTR Drivers
-Click-Through Rate directly influences ranking. Listings must sequence high-resolution imagery around meeting points, inclusions, and experience milestones.
+3. Pricing Matrix Completeness
+Full age-tier configuration (adult, youth, child, infant), transparent group logic, and identical rate parity across every channel. This is what keeps an account healthy.
 
-Replacing bots with human operations managers who monitor inbound queues continuously is the fastest way to hold Page 1 visibility.`,
+4. OTA Distribution Connections
+Connect Bókun to Viator, GetYourGuide, Tiqets, and your own booking widget through a single inventory source. One update closes out every channel at once.
+
+We run full Bókun setup engagements — resource mapping, pricing, policy automation, and OTA connections — so operators go live without the first-month margin leak.`,
   },
   {
     id: "art2",
-    title: "Preventing double-bookings with capacity locks",
-    excerpt: "How to configure Bókun resource pools so overbookings become mathematically impossible.",
-    body: `Overbookings drain account health on distribution networks. Eliminating them requires an engineering approach to reservation setup.
+    title: "How to rank on GetYourGuide & Viator: OTA listing SEO that works",
+    excerpt:
+      "GetYourGuide ranking, Viator placement, OTA listing optimization, and the signals that move tour operators to Page 1.",
+    body: `Ranking on GetYourGuide and Viator is not luck. These platforms run ranking algorithms that reward measurable operator behavior. Here are the signals that move you up.
+
+1. Inquiry Response Latency
+OTA crawlers monitor response speed down to the minute. Replying to pre-booking messages within 15 minutes delivers an immediate organic lift. Slow responses tell the system a listing cannot handle volume, and rankings drop.
+
+2. Pricing Parity & Conversion Velocity
+Every optimized listing carries identical rate parity across public channels, full age-tier pricing, and clean group logic. Listings with higher booking conversion velocity get pushed up.
+
+3. Visual Content CTR Drivers
+Click-Through Rate directly influences placement. Listings must sequence high-resolution imagery around meeting points, inclusions, and experience milestones. The first three photos do most of the ranking work.
+
+4. Review Velocity & Recency
+A steady stream of recent reviews signals active, healthy operations. A human operations team monitoring inbound queues continuously is the fastest way to hold Page 1 visibility on both platforms.`,
+  },
+  {
+    id: "art3",
+    title: "Channel manager audit: stopping double-bookings and rate leaks",
+    excerpt:
+      "Channel manager integration, Bókun inventory sync, and how to make overbookings mathematically impossible.",
+    body: `Overbookings are the silent margin killer on every distribution network. Eliminating them requires an engineering approach to your channel manager setup.
 
 1. Resource Dependency Mapping
 Inside Bókun, physical assets are absolute boundary conditions. Every product departure links to a shared resource pool with exact seat limits, guide roster shifts, and B2B ticket allotments.
 
 2. Live API Inventory Closures
-When a booking lands via GetYourGuide, the API instantly notifies the reservation engine, which reduces slots in the master pool and fires close-out commands across Viator, Tiqets and website widgets simultaneously.
+When a booking lands via GetYourGuide, the API instantly notifies the reservation engine, which reduces slots in the master pool and fires close-out commands across Viator, Tiqets, and your website widget simultaneously.
 
-3. Cutoff Window Safeguards
-Automated booking cutoff windows prevent last-minute traffic spikes from breaking on-site coordination. We audit these parameters daily.`,
+3. Rate Parity Enforcement
+A channel manager audit checks that the same price, the same currency, and the same cancellation terms appear on every connected OTA. Mismatches cause both ranking penalties and guest disputes.
+
+4. Cutoff Window Safeguards
+Automated booking cutoff windows prevent last-minute traffic spikes from breaking on-site coordination. We audit these parameters daily as part of retainer coverage.`,
   },
   {
-    id: "art3",
-    title: "Cancellation shielding & margin protection",
-    excerpt: "Museum ticket liability, Bókun policy automation, and building chargeback evidence packages.",
+    id: "art4",
+    title: "OTA management for tour operators: what it really takes",
+    excerpt:
+      "OTA account management, Viator and GetYourGuide operations, listing health, and the daily workflow that keeps rankings stable.",
+    body: `Running an OTA presence is operational work, not a one-time setup. Operators who treat it as a "set and forget" channel lose ranking within weeks. Here is what daily OTA management actually involves.
+
+1. Listing Health Monitoring
+Every active listing is checked for availability gaps, broken images, price mismatches, and policy drift. A single stale field can trigger a ranking drop.
+
+2. Message Queue Coverage
+OTA inbox messages from Viator, GetYourGuide, and Tiqets must be answered within the platform's response window. Delayed replies compound — each one drags your account health score down.
+
+3. Booking & Fulfillment Sync
+Every confirmed booking flows into the reservation engine, closes inventory across channels, and triggers the guide manifest. Gaps in this sync cause the overbookings that wreck account health.
+
+4. Performance Reporting
+Weekly OTA performance reports — conversion rate, response time, cancellation rate, and review velocity — tell you exactly where ranking is about to slip. We produce these for every retainer client.`,
+  },
+  {
+    id: "art5",
+    title: "Preventing double-bookings: capacity locks that actually work",
+    excerpt:
+      "Bókun resource pools, GetYourGuide and Viator inventory sync, and the safeguards that stop overbookings for tour operators.",
+    body: `Double-bookings don't come from bad luck — they come from unbounded availability. Here is the setup that makes them mathematically impossible.
+
+1. Hard Capacity Per Departure
+Every departure has a fixed seat count tied to a real resource — a vehicle, a guide shift, or a B2B ticket allotment. Bókun must reject any booking that exceeds it.
+
+2. Real-Time Multi-Channel Sync
+When a booking lands on GetYourGuide, Viator, or your own widget, all channels see the updated pool within seconds. A channel manager that polls on a delay is the most common overbooking cause.
+
+3. Cutoff & Buffer Windows
+Set a booking cutoff (e.g. 12h before departure) and a small inventory buffer so last-minute walk-ups never exceed what the team can fulfill.
+
+4. Daily Audit
+We audit capacity settings, sold-out departures, and failed close-outs every day. Overbookings stop being possible once the system is watched.`,
+  },
+  {
+    id: "art6",
+    title: "Cancellation shielding & chargeback defense for travel operators",
+    excerpt:
+      "Museum ticket liability, Bókun cancellation policy automation, and building chargeback evidence packages that win disputes.",
     body: `Cancellations quietly drain cash flow when systems are misconfigured. Seasonal margin protection requires a strict workflow.
 
 1. Museum Entry Ticket Liability
-Operators holding B2B contracts for the Vatican, Colosseum or Louvre buy non-refundable entry tickets in advance. Cancellations outside terms mean immediate loss.
+Operators holding B2B contracts for the Vatican, Colosseum, or Louvre buy non-refundable entry tickets in advance. Cancellations outside terms mean immediate loss.
 
 2. Automating Bókun Policy Enforcement
-The reservation system must run dynamic cancellation cutoffs — locking modifications before non-refundable monument windows close.
+The reservation system must run dynamic cancellation cutoffs — locking modifications before non-refundable monument windows close. This is configured per product, not globally.
 
 3. Chargeback Evidence Packages
-When guests initiate credit-card disputes, we assemble timestamped check-in vouchers, manifest histories and native OTA message strings. This refutes fraud and protects gross margin.`,
+When guests initiate credit-card disputes through GetYourGuide or Viator, we assemble timestamped check-in vouchers, manifest histories, and native OTA message strings. This refutes fraud claims and protects gross margin.
+
+4. Refund Reconciliation
+Every refund is matched to the original OTA commission, payment processor fee, and supplier cost so the books stay clean and margin is tracked accurately.`,
   },
 ];
 
