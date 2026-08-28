@@ -35,6 +35,9 @@
   --color-teal-glow: var(--teal-glow);
   --color-emerald: var(--emerald);
   --color-rose: var(--rose);
+  --color-amber: var(--amber);
+  --color-violet: var(--violet);
+  --color-sky: var(--sky);
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
 }
@@ -75,6 +78,9 @@
   --teal-glow: #14b8a6;
   --emerald: #10b981;
   --rose: #f43f5e;
+  --amber: #f59e0b;
+  --violet: #a78bfa;
+  --sky: #38bdf8;
 }
 
 @layer base {
