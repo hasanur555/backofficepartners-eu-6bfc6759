@@ -1179,16 +1179,20 @@ function PartnerLogos() {
           </div>
           <div className="glass rounded-2xl p-6">
             <h3 className="font-display text-lg font-semibold">Digital operational support</h3>
-            <p className="mt-1 text-xs text-muted-foreground">Brands taking back-office support from us.</p>
+            <p className="mt-1 text-xs text-muted-foreground">A selection of brands taking back-office support from us — not the full list.</p>
             <div className="mt-6 grid grid-cols-2 gap-4">
               {SUPPORT_CLIENTS.map((p) => (
                 <div key={p.name} className="flex h-24 items-center justify-center rounded-xl bg-white/90 p-4">
                   <img src={p.logo} alt={`${p.name} logo`} loading="lazy" className="max-h-16 w-auto object-contain" />
                 </div>
               ))}
+              <div className="col-span-2 flex h-16 items-center justify-center rounded-xl border border-dashed border-white/15 px-4 text-center text-xs font-medium text-muted-foreground">
+                + more tour operators, DMCs and city-tour brands across Europe (names under NDA)
+              </div>
             </div>
           </div>
         </div>
+
         <div className="mt-8 text-center">
           <a href={SERVICE_PDF} download className="btn-outline-teal inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-semibold">
             <Download className="h-4 w-4" /> Download service catalogue (PDF)
