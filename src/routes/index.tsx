@@ -564,7 +564,7 @@ function BrandMatrix() {
   return (
     <section className="mx-auto max-w-6xl px-5 py-16">
       <SectionHeading
-        eyebrow="Performance split"
+        eyebrow="Performance split" accent="var(--sky)"
         title="Managing multi-brand portfolios at scale"
         subtitle="Real numbers from parent accounts with distinct sub-brands running under one operations desk."
       />
@@ -590,7 +590,7 @@ function WhyUsMatrix() {
     <section id="why-us" className="border-y border-white/5 bg-white/[0.02] py-20">
       <div className="mx-auto max-w-6xl px-5">
         <SectionHeading
-          eyebrow="Human-first framework"
+          eyebrow="Human-first framework" accent="var(--violet)"
           title="Why rigid automation & AI auto-responses kill your listings"
           subtitle="Every traveler review has a soul. Guests spot generic AI replies instantly — and OTA algorithms are engineered to de-rank automated profiles in favor of genuine engagement."
         />
@@ -617,7 +617,7 @@ function Services() {
   return (
     <section id="services" className="mx-auto max-w-6xl px-5 py-20">
       <SectionHeading
-        eyebrow="Services"
+        eyebrow="Services" accent="var(--emerald)"
         title="What we do for you"
         subtitle="Pick a single service or bundle several. Every engagement starts with a short discovery call so we can scope the work honestly."
       />
@@ -701,7 +701,7 @@ function Research() {
   return (
     <section id="research" className="mx-auto max-w-6xl px-5 py-20">
       <SectionHeading
-        eyebrow="Industry research"
+        eyebrow="Industry research" accent="var(--rose)"
         title="Where operators quietly leak revenue"
         subtitle="Aggregated from audits we ran across tour operators, DMCs and boutique hotels in the last 12 months."
       />
@@ -798,7 +798,7 @@ function Configurator() {
     <section id="configurator" className="border-y border-white/5 bg-white/[0.02] py-20">
       <div className="mx-auto max-w-6xl px-5">
         <SectionHeading
-          eyebrow="Configurator"
+          eyebrow="Configurator" accent="var(--amber)"
           title="Build your custom operational plan"
           subtitle="Two modes: monthly retainer or standalone project. Live pricing, and a copy-ready proposal you can email us."
         />
@@ -974,7 +974,7 @@ function ArticlesHub() {
       />
       <div className="relative mx-auto max-w-6xl px-5">
         <SectionHeading
-          eyebrow="Knowledge base & SEO guides"
+          eyebrow="Knowledge base & SEO guides" accent="var(--emerald)"
           title="Operational insights for Bókun, GetYourGuide & OTA operators"
           subtitle="Practical guides on Bókun setup, OTA listing SEO, channel manager audits, and double-booking prevention — written by the people who run these systems every day."
         />
@@ -1020,7 +1020,7 @@ function WhyUs() {
   return (
     <section className="border-y border-white/5 bg-white/[0.02] py-20">
       <div className="mx-auto max-w-6xl px-5">
-        <SectionHeading eyebrow="Why us" title="The logic behind hiring a back-office partner" />
+        <SectionHeading eyebrow="Why us" accent="var(--violet)" title="The logic behind hiring a back-office partner" />
         <div className="mt-10 grid gap-5 md:grid-cols-3">
           {WHY_US.map((w) => {
             const Icon = w.icon;
@@ -1095,7 +1095,7 @@ function Booking() {
 
   return (
     <section id="book" className="mx-auto max-w-6xl px-5 py-20">
-      <SectionHeading eyebrow="Book a call" title="Pick a time — we'll take it from there" subtitle="20-minute discovery call. If we're a fit, we send a scoped proposal and a clean invoice. No cards, no gateway. Bank transfer only." />
+      <SectionHeading eyebrow="Book a call" accent="var(--sky)" title="Pick a time — we'll take it from there" subtitle="20-minute discovery call. If we're a fit, we send a scoped proposal and a clean invoice. No cards, no gateway. Bank transfer only." />
       <div className="mt-10 grid gap-6 md:grid-cols-2">
         <Card className="glass border-white/10">
           <CardHeader>
@@ -1180,7 +1180,7 @@ function Careers() {
   return (
     <section id="careers" className="border-t border-white/5 bg-white/[0.02] py-20">
       <div className="mx-auto max-w-4xl px-5">
-        <SectionHeading eyebrow="Careers" title="Join our remote operations bench" subtitle="We're hiring elite travel-ops freelancers — Bókun architects, OTA channel managers, guest support agents and procurement operators." />
+        <SectionHeading eyebrow="Careers" accent="var(--amber)" title="Join our remote operations bench" subtitle="We're hiring elite travel-ops freelancers — Bókun architects, OTA channel managers, guest support agents and procurement operators." />
         {submitted ? (
           <div id="apply-success" className="mt-10 glass rounded-2xl p-8 text-center">
             <CheckCircle2 className="mx-auto h-10 w-10 text-[var(--emerald)]" />
@@ -1236,7 +1236,7 @@ function PartnerLogos() {
     <section id="partners" className="border-y border-white/5 bg-white/[0.02] py-16">
       <div className="mx-auto max-w-6xl px-5">
         <SectionHeading
-          eyebrow="Partners & clients"
+          eyebrow="Partners & clients" accent="var(--teal-glow)"
           title="Technology and online operational support"
           subtitle="We solve OTA and tourism operators' platform problems — and build custom software around each company's workflow."
         />
@@ -1301,7 +1301,7 @@ function RequestService() {
   return (
     <section id="request" className="mx-auto max-w-4xl px-5 py-20">
       <SectionHeading
-        eyebrow="Request a service"
+        eyebrow="Request a service" accent="var(--rose)"
         title="Tell us what you need"
         subtitle="Any query — platform setup, audit, marketing or custom software. We reply with scope and a fixed price, then invoice after a short meeting."
       />
