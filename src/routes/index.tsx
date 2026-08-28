@@ -296,6 +296,8 @@ const EXCLUDED = [
 ];
 
 /* Configurator data */
+const LOW_SEASON_DISCOUNT = 50;
+
 const TIERS = [
   { id: "starter", label: "Starter — up to 1,000 bookings/mo", price: 1499 },
   { id: "growth", label: "Growth — 1,001 to 3,000 bookings/mo", price: 2999 },
@@ -475,7 +477,7 @@ function AnnouncementBar() {
   return (
     <div className="bg-[var(--teal)]/15 border-b border-[var(--teal-glow)]/30 text-center text-xs py-2 px-4 text-[color:var(--teal-glow)]">
       <Sparkles className="inline h-3.5 w-3.5 mr-1.5 -mt-0.5" />
-      Active Operations Peak: Now onboarding selected global tour operators and DMCs for late seasonal coverage.
+      Low Season Offer: €50 off every retainer and standalone project — now onboarding selected global tour operators and DMCs.
     </div>
   );
 }
@@ -743,7 +745,7 @@ function Configurator() {
   const modules = MODULES.filter((m) => moduleIds.includes(m.id));
   const standalones = STANDALONE.filter((s) => standaloneIds.includes(s.id));
 
-  const total = useMemo(() => {
+  const subtotal = useMemo(() => {
     if (mode === "retainer") {
       const base = tier.price * coverage.mult;
       const add = modules.reduce((s, m) => s + m.price, 0);
@@ -751,6 +753,10 @@ function Configurator() {
     }
     return standalones.reduce((s, x) => s + x.price, 0);
   }, [mode, tier, coverage, modules, standalones]);
+
+  const discount = subtotal > 0 ? Math.min(LOW_SEASON_DISCOUNT, subtotal) : 0;
+  const total = subtotal - discount;
+
 
   const proposal = useMemo(() => {
     const lines = [
@@ -763,6 +769,8 @@ function Configurator() {
       `• Configuration Type: ${mode === "retainer" ? "Custom Retainer" : "Standalone Project"}`,
       `• Booking Volume Limit: ${mode === "retainer" ? tier.label : "Standalone tasks (see below)"}`,
       `• Coverage Schedule: ${mode === "retainer" ? coverage.label : "One-time project"}`,
+      `• Subtotal: €${subtotal.toLocaleString()}`,
+      `• Low Season Discount: -€${discount.toLocaleString()}`,
       `• Configured Price Estimate: €${total.toLocaleString()}${mode === "retainer" ? " / month" : " one-time"}`,
       "",
       "SELECTED SERVICE CONFIGURATION:",
@@ -777,7 +785,7 @@ function Configurator() {
       "We would like to book our initial 10-minute operational audit to review our reservation parameters. Please reply with scheduling availability.",
     ];
     return lines.join("\n");
-  }, [mode, tier, coverage, modules, standalones, total, clientUrl, clientNotes]);
+  }, [mode, tier, coverage, modules, standalones, subtotal, discount, total, clientUrl, clientNotes]);
 
   const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("B2B operational estimate — discovery call request")}&body=${encodeURIComponent(proposal)}`;
 
@@ -915,10 +923,19 @@ function Configurator() {
             <CardContent className="space-y-4">
               <div className="rounded-xl border border-[var(--teal-glow)]/40 bg-[var(--teal)]/10 p-5">
                 <div className="text-xs uppercase tracking-widest text-muted-foreground">Estimated total</div>
+                {discount > 0 && (
+                  <div className="mt-1 flex items-center gap-2 text-sm">
+                    <span className="text-muted-foreground line-through">€{subtotal.toLocaleString()}</span>
+                    <span className="rounded-full border border-[var(--teal-glow)]/40 bg-[var(--teal)]/15 px-2 py-0.5 text-xs font-semibold text-[var(--teal-glow)]">
+                      Low season discount −€{discount}
+                    </span>
+                  </div>
+                )}
                 <div className="font-display text-4xl font-bold text-[var(--teal-glow)]">
                   €{total.toLocaleString()}
                   <span className="ml-2 text-sm text-muted-foreground font-sans">{mode === "retainer" ? "/ month" : "one-time"}</span>
                 </div>
+
               </div>
               <Textarea readOnly value={proposal} rows={14} className="font-mono text-xs" />
               <div className="flex flex-wrap gap-3">
