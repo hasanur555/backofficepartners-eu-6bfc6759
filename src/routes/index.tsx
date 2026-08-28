@@ -1,4 +1,4 @@
-import { PartnerLogos } from "@/components/PartnerLogos";import { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   ArrowRight,
   CheckCircle2,
