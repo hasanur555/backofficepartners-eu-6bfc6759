@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://backofficepartners-eu.lovable.app/sitemap.xml
