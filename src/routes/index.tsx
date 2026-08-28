@@ -1012,6 +1012,9 @@ function Careers() {
     if (bio.trim().length < 50) return setError("Track record must be at least 50 characters.");
     if (portfolio && !/^https?:\/\//i.test(portfolio)) return setError("Portfolio must be a full URL.");
     setSubmitted(true);
+    void notifySubmission(`Freelancer application — ${role}`, {
+      Name: name, Email: email, Role: role, Experience: years, Portfolio: portfolio || "-", "Track record": bio,
+    });
     // fire-and-forget email link
     const body = `Name: ${name}\nEmail: ${email}\nRole: ${role}\nExperience: ${years}\nPortfolio: ${portfolio || "-"}\n\nTrack record:\n${bio}`;
     window.location.href = `mailto:${CAREERS_EMAIL}?subject=${encodeURIComponent(`Freelancer application — ${role}`)}&body=${encodeURIComponent(body)}`;
