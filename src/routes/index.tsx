@@ -785,7 +785,7 @@ function Configurator() {
       "We would like to book our initial 10-minute operational audit to review our reservation parameters. Please reply with scheduling availability.",
     ];
     return lines.join("\n");
-  }, [mode, tier, coverage, modules, standalones, total, clientUrl, clientNotes]);
+  }, [mode, tier, coverage, modules, standalones, subtotal, discount, total, clientUrl, clientNotes]);
 
   const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("B2B operational estimate — discovery call request")}&body=${encodeURIComponent(proposal)}`;
 
