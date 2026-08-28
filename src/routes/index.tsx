@@ -913,34 +913,77 @@ function Configurator() {
           </Card>
 
           {/* Output panel */}
-          <Card className="glass border-white/10">
+          <Card className="glass border-[var(--amber)]/25">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 font-display text-lg">
-                <FileText className="h-5 w-5 text-[var(--teal-glow)]" /> Live estimate & proposal
+                <FileText className="h-5 w-5 text-[var(--amber)]" /> Live estimate & proposal
               </CardTitle>
-              <CardDescription>Copy this or send it directly to us.</CardDescription>
+              <CardDescription>A clean summary of your configuration — copy it or email it to us.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="rounded-xl border border-[var(--teal-glow)]/40 bg-[var(--teal)]/10 p-5">
-                <div className="text-xs uppercase tracking-widest text-muted-foreground">Estimated total</div>
+            <CardContent className="space-y-5">
+              {/* Summary lines */}
+              <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm">
+                <div className="flex items-center justify-between py-1.5">
+                  <span className="text-muted-foreground">Plan</span>
+                  <span className="font-medium">{mode === "retainer" ? tier.label : "Standalone project"}</span>
+                </div>
+                <div className="flex items-center justify-between border-t border-white/5 py-1.5">
+                  <span className="text-muted-foreground">Coverage</span>
+                  <span className="font-medium">{mode === "retainer" ? coverage.label : "One-time delivery"}</span>
+                </div>
+                <div className="border-t border-white/5 pt-2">
+                  <div className="text-xs uppercase tracking-widest text-muted-foreground">Selected items</div>
+                  <ul className="mt-2 space-y-1.5">
+                    {(mode === "retainer" ? modules : standalones).length === 0 && (
+                      <li className="text-muted-foreground">Nothing selected yet.</li>
+                    )}
+                    {mode === "retainer"
+                      ? modules.map((m) => (
+                          <li key={m.id} className="flex items-center justify-between gap-3">
+                            <span className="flex items-center gap-2">
+                              <span className="h-1.5 w-1.5 rounded-full bg-[var(--emerald)]" />
+                              {m.label}
+                            </span>
+                            <span className="tabular-nums text-muted-foreground">€{m.price}/mo</span>
+                          </li>
+                        ))
+                      : standalones.map((s) => (
+                          <li key={s.id} className="flex items-center justify-between gap-3">
+                            <span className="flex items-center gap-2">
+                              <span className="h-1.5 w-1.5 rounded-full bg-[var(--sky)]" />
+                              {s.label}
+                            </span>
+                            <span className="tabular-nums text-muted-foreground">€{s.price}</span>
+                          </li>
+                        ))}
+                  </ul>
+                </div>
+              </div>
+
+              {/* Totals */}
+              <div className="rounded-xl border border-[var(--amber)]/35 bg-[var(--amber)]/10 p-5">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">Subtotal</span>
+                  <span className="tabular-nums">€{subtotal.toLocaleString()}</span>
+                </div>
                 {discount > 0 && (
-                  <div className="mt-1 flex items-center gap-2 text-sm">
-                    <span className="text-muted-foreground line-through">€{subtotal.toLocaleString()}</span>
-                    <span className="rounded-full border border-[var(--teal-glow)]/40 bg-[var(--teal)]/15 px-2 py-0.5 text-xs font-semibold text-[var(--teal-glow)]">
-                      Low season discount −€{discount}
-                    </span>
+                  <div className="mt-1 flex items-center justify-between text-sm">
+                    <span className="text-[var(--emerald)]">Low season discount</span>
+                    <span className="tabular-nums text-[var(--emerald)]">−€{discount}</span>
                   </div>
                 )}
-                <div className="font-display text-4xl font-bold text-[var(--teal-glow)]">
-                  €{total.toLocaleString()}
-                  <span className="ml-2 text-sm text-muted-foreground font-sans">{mode === "retainer" ? "/ month" : "one-time"}</span>
+                <div className="mt-3 flex items-end justify-between border-t border-white/10 pt-3">
+                  <span className="text-xs uppercase tracking-widest text-muted-foreground">Estimated total</span>
+                  <span className="font-display text-4xl font-bold text-[var(--amber)]">
+                    €{total.toLocaleString()}
+                    <span className="ml-2 font-sans text-sm text-muted-foreground">{mode === "retainer" ? "/ month" : "one-time"}</span>
+                  </span>
                 </div>
-
               </div>
-              <Textarea readOnly value={proposal} rows={14} className="font-mono text-xs" />
+
               <div className="flex flex-wrap gap-3">
                 <Button asChild className="btn-teal">
-                  <a href={mailto}>Compile proposal & request call <ArrowRight className="h-4 w-4" /></a>
+                  <a href={mailto}>Send proposal & request call <ArrowRight className="h-4 w-4" /></a>
                 </Button>
                 <Button
                   variant="outline"
@@ -949,7 +992,13 @@ function Configurator() {
                 >
                   Copy proposal
                 </Button>
+                <Button variant="ghost" onClick={() => setShowProposal((v) => !v)} className="text-muted-foreground">
+                  {showProposal ? "Hide details" : "View full text"}
+                </Button>
               </div>
+
+              {showProposal && <Textarea readOnly value={proposal} rows={14} className="font-mono text-xs" />}
+
             </CardContent>
           </Card>
         </div>
