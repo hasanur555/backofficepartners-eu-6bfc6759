@@ -1012,6 +1012,9 @@ function Careers() {
     if (bio.trim().length < 50) return setError("Track record must be at least 50 characters.");
     if (portfolio && !/^https?:\/\//i.test(portfolio)) return setError("Portfolio must be a full URL.");
     setSubmitted(true);
+    void notifySubmission(`Freelancer application — ${role}`, {
+      Name: name, Email: email, Role: role, Experience: years, Portfolio: portfolio || "-", "Track record": bio,
+    });
     // fire-and-forget email link
     const body = `Name: ${name}\nEmail: ${email}\nRole: ${role}\nExperience: ${years}\nPortfolio: ${portfolio || "-"}\n\nTrack record:\n${bio}`;
     window.location.href = `mailto:${CAREERS_EMAIL}?subject=${encodeURIComponent(`Freelancer application — ${role}`)}&body=${encodeURIComponent(body)}`;
@@ -1067,6 +1070,115 @@ function Careers() {
           </form>
         )}
       </div>
+    </section>
+  );
+}
+
+function PartnerLogos() {
+  return (
+    <section id="partners" className="border-y border-white/5 bg-white/[0.02] py-16">
+      <div className="mx-auto max-w-6xl px-5">
+        <SectionHeading
+          eyebrow="Partners & clients"
+          title="Technology and online operational support"
+          subtitle="We solve OTA and tourism operators' platform problems — and build custom software around each company's workflow."
+        />
+        <div className="mt-10 grid gap-6 md:grid-cols-2">
+          <div className="glass rounded-2xl p-6">
+            <h3 className="font-display text-lg font-semibold">Technology partners</h3>
+            <p className="mt-1 text-xs text-muted-foreground">Joint technology and platform delivery.</p>
+            <div className="mt-6 grid grid-cols-2 gap-4">
+              {TECH_PARTNERS.map((p) => (
+                <div key={p.name} className="flex h-24 items-center justify-center rounded-xl bg-white/90 p-4">
+                  <img src={p.logo} alt={`${p.name} logo`} loading="lazy" className="max-h-16 w-auto object-contain" />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="glass rounded-2xl p-6">
+            <h3 className="font-display text-lg font-semibold">Digital operational support</h3>
+            <p className="mt-1 text-xs text-muted-foreground">Brands taking back-office support from us.</p>
+            <div className="mt-6 grid grid-cols-2 gap-4">
+              {SUPPORT_CLIENTS.map((p) => (
+                <div key={p.name} className="flex h-24 items-center justify-center rounded-xl bg-white/90 p-4">
+                  <img src={p.logo} alt={`${p.name} logo`} loading="lazy" className="max-h-16 w-auto object-contain" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="mt-8 text-center">
+          <a href={SERVICE_PDF} download className="btn-outline-teal inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-semibold">
+            <Download className="h-4 w-4" /> Download service catalogue (PDF)
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function RequestService() {
+  const [company, setCompany] = useState("");
+  const [email, setEmail] = useState("");
+  const [topic, setTopic] = useState(REQUEST_TOPICS[0]);
+  const [details, setDetails] = useState("");
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    if (!company.trim()) return setError("Company name is required.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return setError("Valid business email required.");
+    if (details.trim().length < 20) return setError("Please describe your request (min 20 characters).");
+    setSent(true);
+    void notifySubmission(`Service request — ${topic}`, {
+      Company: company, Email: email, Topic: topic, Details: details,
+    });
+  };
+
+  return (
+    <section id="request" className="mx-auto max-w-4xl px-5 py-20">
+      <SectionHeading
+        eyebrow="Request a service"
+        title="Tell us what you need"
+        subtitle="Any query — platform setup, audit, marketing or custom software. We reply with scope and a fixed price, then invoice after a short meeting."
+      />
+      {sent ? (
+        <div className="mt-10 glass rounded-2xl p-8 text-center">
+          <CheckCircle2 className="mx-auto h-10 w-10 text-[var(--emerald)]" />
+          <h3 className="mt-3 font-display text-2xl font-bold">Request received</h3>
+          <p className="mt-2 text-sm text-muted-foreground">We'll respond from {CONTACT_EMAIL} within one business day.</p>
+        </div>
+      ) : (
+        <form onSubmit={submit} className="mt-10 glass rounded-2xl p-6 md:p-8 space-y-4">
+          <div className="grid gap-3 md:grid-cols-2">
+            <div>
+              <label htmlFor="req-company" className="text-xs text-muted-foreground">Company *</label>
+              <Input id="req-company" value={company} onChange={(e) => setCompany(e.target.value)} required />
+            </div>
+            <div>
+              <label htmlFor="req-email" className="text-xs text-muted-foreground">Business email *</label>
+              <Input id="req-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            </div>
+          </div>
+          <div>
+            <label htmlFor="req-topic" className="text-xs text-muted-foreground">What do you need? *</label>
+            <select id="req-topic" value={topic} onChange={(e) => setTopic(e.target.value)} className="mt-1 flex h-9 w-full rounded-md border border-input bg-transparent px-3 text-sm">
+              {REQUEST_TOPICS.map((t) => <option key={t} value={t} className="bg-[#0b1329]">{t}</option>)}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="req-details" className="text-xs text-muted-foreground">Details / query *</label>
+            <Textarea id="req-details" value={details} onChange={(e) => setDetails(e.target.value)} rows={5} placeholder="Platforms in use, volumes, deadlines, and what you want solved." />
+          </div>
+          {error && <div className="text-sm text-[var(--rose)]">{error}</div>}
+          <div className="flex flex-wrap items-center gap-3">
+            <Button type="submit" className="btn-teal"><MessageSquare className="h-4 w-4" /> Send request</Button>
+            <a href={`mailto:${CONTACT_EMAIL}?subject=Service%20request`} className="text-xs text-muted-foreground underline">or email {CONTACT_EMAIL}</a>
+          </div>
+        </form>
+      )}
     </section>
   );
 }
