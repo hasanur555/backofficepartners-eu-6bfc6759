@@ -296,6 +296,8 @@ const EXCLUDED = [
 ];
 
 /* Configurator data */
+const LOW_SEASON_DISCOUNT = 50;
+
 const TIERS = [
   { id: "starter", label: "Starter — up to 1,000 bookings/mo", price: 1499 },
   { id: "growth", label: "Growth — 1,001 to 3,000 bookings/mo", price: 2999 },
