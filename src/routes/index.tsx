@@ -227,6 +227,7 @@ const SERVICES: Service[] = [
     ],
     price: "from €699 / month",
     priceNote: "scoped per channel",
+    accent: "var(--violet)",
   },
   {
     id: "software",
