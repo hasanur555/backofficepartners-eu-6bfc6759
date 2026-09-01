@@ -153,6 +153,7 @@ type Service = {
   bullets: string[];
   price: string;
   priceNote: string;
+  accent: string; // css color token, e.g. "var(--teal-glow)"
 };
 
 const SERVICES: Service[] = [
