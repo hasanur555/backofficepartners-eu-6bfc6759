@@ -636,11 +636,24 @@ function Services() {
 
 function ServiceCard({ s }: { s: Service }) {
   const Icon = s.icon;
+  const accent = s.accent;
   return (
-    <Card className="glass border-white/10 transition hover:border-[var(--teal-glow)]/40">
+    <Card
+      className="glass transition hover:-translate-y-1"
+      style={{
+        borderColor: `color-mix(in oklab, ${accent} 35%, transparent)`,
+      }}
+    >
       <CardHeader className="gap-2">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--teal)]/15 text-[var(--teal-glow)]">
+          <div
+            className="flex h-10 w-10 items-center justify-center rounded-lg"
+            style={{
+              background: `color-mix(in oklab, ${accent} 16%, transparent)`,
+              color: accent,
+              boxShadow: `0 0 0 1px color-mix(in oklab, ${accent} 40%, transparent)`,
+            }}
+          >
             <Icon className="h-5 w-5" />
           </div>
           <div>
@@ -654,17 +667,28 @@ function ServiceCard({ s }: { s: Service }) {
         <ul className="space-y-2 text-sm">
           {s.bullets.map((b) => (
             <li key={b} className="flex items-start gap-2">
-              <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-[var(--emerald)]" />
+              <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0" style={{ color: accent }} />
               <span>{b}</span>
             </li>
           ))}
         </ul>
-        <div className="flex items-end justify-between border-t border-white/10 pt-4">
+        <div
+          className="flex items-end justify-between border-t pt-4"
+          style={{ borderColor: `color-mix(in oklab, ${accent} 22%, transparent)` }}
+        >
           <div>
-            <div className="font-display text-2xl font-bold text-[var(--teal-glow)]">{s.price}</div>
+            <div className="font-display text-2xl font-bold" style={{ color: accent }}>{s.price}</div>
             <div className="text-xs text-muted-foreground">{s.priceNote}</div>
           </div>
-          <a href="#configurator" className="btn-outline-teal inline-flex items-center gap-1 rounded-md px-3 py-2 text-xs font-semibold">
+          <a
+            href="#configurator"
+            className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-xs font-semibold transition"
+            style={{
+              border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`,
+              color: accent,
+              background: `color-mix(in oklab, ${accent} 8%, transparent)`,
+            }}
+          >
             Configure <ArrowRight className="h-3.5 w-3.5" />
           </a>
         </div>
