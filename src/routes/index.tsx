@@ -481,9 +481,23 @@ function Home() {
 
 function AnnouncementBar() {
   return (
-    <div className="bg-[var(--teal)]/15 border-b border-[var(--teal-glow)]/30 text-center text-xs py-2 px-4 text-[color:var(--teal-glow)]">
-      <Sparkles className="inline h-3.5 w-3.5 mr-1.5 -mt-0.5" />
-      Low Season Offer: €50 off every retainer and standalone project — now onboarding selected global tour operators and DMCs.
+    <div
+      className="relative overflow-hidden text-center text-sm py-2.5 px-4 font-semibold"
+      style={{
+        background:
+          "linear-gradient(90deg, color-mix(in oklab, var(--amber) 28%, transparent), color-mix(in oklab, var(--rose) 26%, transparent), color-mix(in oklab, var(--teal-glow) 24%, transparent))",
+        borderBottom: "1px solid color-mix(in oklab, var(--amber) 55%, transparent)",
+        color: "#fff7e6",
+      }}
+    >
+      <span
+        className="absolute inset-0 grid-noise opacity-30 pointer-events-none"
+        aria-hidden
+      />
+      <span className="relative">
+        <Sparkles className="inline h-4 w-4 mr-1.5 -mt-0.5 text-[#ffe9a8]" />
+        Low Season Offer: <span className="text-white">€50 off</span> every retainer and standalone project — now onboarding selected global tour operators and DMCs.
+      </span>
     </div>
   );
 }
