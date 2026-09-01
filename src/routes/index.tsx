@@ -173,6 +173,7 @@ const SERVICES: Service[] = [
     ],
     price: "from €349 / month",
     priceNote: "per platform · one-time setup €199",
+    accent: "var(--teal-glow)",
   },
   {
     id: "pms",
