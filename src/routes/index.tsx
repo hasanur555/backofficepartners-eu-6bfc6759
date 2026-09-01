@@ -245,6 +245,7 @@ const SERVICES: Service[] = [
     ],
     price: "quoted per scope",
     priceNote: "fixed-price milestones · invoice billing",
+    accent: "var(--rose)",
   },
 ];
 
