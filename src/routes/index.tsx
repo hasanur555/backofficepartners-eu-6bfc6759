@@ -153,6 +153,7 @@ type Service = {
   bullets: string[];
   price: string;
   priceNote: string;
+  accent: string; // css color token, e.g. "var(--teal-glow)"
 };
 
 const SERVICES: Service[] = [
@@ -172,6 +173,7 @@ const SERVICES: Service[] = [
     ],
     price: "from €349 / month",
     priceNote: "per platform · one-time setup €199",
+    accent: "var(--teal-glow)",
   },
   {
     id: "pms",
@@ -189,6 +191,7 @@ const SERVICES: Service[] = [
     ],
     price: "from €449 / month",
     priceNote: "per property · setup from €299",
+    accent: "var(--sky)",
   },
   {
     id: "audit",
@@ -206,6 +209,7 @@ const SERVICES: Service[] = [
     ],
     price: "€599 one-time",
     priceNote: "delivered in 5 business days",
+    accent: "var(--amber)",
   },
   {
     id: "marketing",
@@ -223,6 +227,7 @@ const SERVICES: Service[] = [
     ],
     price: "from €699 / month",
     priceNote: "scoped per channel",
+    accent: "var(--violet)",
   },
   {
     id: "software",
@@ -240,6 +245,7 @@ const SERVICES: Service[] = [
     ],
     price: "quoted per scope",
     priceNote: "fixed-price milestones · invoice billing",
+    accent: "var(--rose)",
   },
 ];
 
@@ -475,9 +481,23 @@ function Home() {
 
 function AnnouncementBar() {
   return (
-    <div className="bg-[var(--teal)]/15 border-b border-[var(--teal-glow)]/30 text-center text-xs py-2 px-4 text-[color:var(--teal-glow)]">
-      <Sparkles className="inline h-3.5 w-3.5 mr-1.5 -mt-0.5" />
-      Low Season Offer: €50 off every retainer and standalone project — now onboarding selected global tour operators and DMCs.
+    <div
+      className="relative overflow-hidden text-center text-sm py-2.5 px-4 font-semibold"
+      style={{
+        background:
+          "linear-gradient(90deg, color-mix(in oklab, var(--amber) 28%, transparent), color-mix(in oklab, var(--rose) 26%, transparent), color-mix(in oklab, var(--teal-glow) 24%, transparent))",
+        borderBottom: "1px solid color-mix(in oklab, var(--amber) 55%, transparent)",
+        color: "#fff7e6",
+      }}
+    >
+      <span
+        className="absolute inset-0 grid-noise opacity-30 pointer-events-none"
+        aria-hidden
+      />
+      <span className="relative">
+        <Sparkles className="inline h-4 w-4 mr-1.5 -mt-0.5 text-[#ffe9a8]" />
+        Low Season Offer: <span className="text-white">€50 off</span> every retainer and standalone project — now onboarding selected global tour operators and DMCs.
+      </span>
     </div>
   );
 }
@@ -630,11 +650,24 @@ function Services() {
 
 function ServiceCard({ s }: { s: Service }) {
   const Icon = s.icon;
+  const accent = s.accent;
   return (
-    <Card className="glass border-white/10 transition hover:border-[var(--teal-glow)]/40">
+    <Card
+      className="glass transition hover:-translate-y-1"
+      style={{
+        borderColor: `color-mix(in oklab, ${accent} 35%, transparent)`,
+      }}
+    >
       <CardHeader className="gap-2">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--teal)]/15 text-[var(--teal-glow)]">
+          <div
+            className="flex h-10 w-10 items-center justify-center rounded-lg"
+            style={{
+              background: `color-mix(in oklab, ${accent} 16%, transparent)`,
+              color: accent,
+              boxShadow: `0 0 0 1px color-mix(in oklab, ${accent} 40%, transparent)`,
+            }}
+          >
             <Icon className="h-5 w-5" />
           </div>
           <div>
@@ -648,17 +681,28 @@ function ServiceCard({ s }: { s: Service }) {
         <ul className="space-y-2 text-sm">
           {s.bullets.map((b) => (
             <li key={b} className="flex items-start gap-2">
-              <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-[var(--emerald)]" />
+              <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0" style={{ color: accent }} />
               <span>{b}</span>
             </li>
           ))}
         </ul>
-        <div className="flex items-end justify-between border-t border-white/10 pt-4">
+        <div
+          className="flex items-end justify-between border-t pt-4"
+          style={{ borderColor: `color-mix(in oklab, ${accent} 22%, transparent)` }}
+        >
           <div>
-            <div className="font-display text-2xl font-bold text-[var(--teal-glow)]">{s.price}</div>
+            <div className="font-display text-2xl font-bold" style={{ color: accent }}>{s.price}</div>
             <div className="text-xs text-muted-foreground">{s.priceNote}</div>
           </div>
-          <a href="#configurator" className="btn-outline-teal inline-flex items-center gap-1 rounded-md px-3 py-2 text-xs font-semibold">
+          <a
+            href="#configurator"
+            className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-xs font-semibold transition"
+            style={{
+              border: `1px solid color-mix(in oklab, ${accent} 45%, transparent)`,
+              color: accent,
+              background: `color-mix(in oklab, ${accent} 8%, transparent)`,
+            }}
+          >
             Configure <ArrowRight className="h-3.5 w-3.5" />
           </a>
         </div>
