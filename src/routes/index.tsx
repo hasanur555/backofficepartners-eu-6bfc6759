@@ -209,6 +209,7 @@ const SERVICES: Service[] = [
     ],
     price: "€599 one-time",
     priceNote: "delivered in 5 business days",
+    accent: "var(--amber)",
   },
   {
     id: "marketing",
