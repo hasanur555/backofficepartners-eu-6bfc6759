@@ -191,6 +191,7 @@ const SERVICES: Service[] = [
     ],
     price: "from €449 / month",
     priceNote: "per property · setup from €299",
+    accent: "var(--sky)",
   },
   {
     id: "audit",
