@@ -486,6 +486,7 @@ function Home() {
       <Careers />
       <Footer />
     </div>
+    </PricesContext.Provider>
   );
 }
 
