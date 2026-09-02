@@ -491,6 +491,9 @@ function Home() {
 }
 
 function AnnouncementBar() {
+  const p = usePrices();
+  const off = p("discount_low_season");
+  if (off <= 0) return null;
   return (
     <div
       className="relative overflow-hidden text-center text-sm py-2.5 px-4 font-semibold"
@@ -507,7 +510,7 @@ function AnnouncementBar() {
       />
       <span className="relative">
         <Sparkles className="inline h-4 w-4 mr-1.5 -mt-0.5 text-[#ffe9a8]" />
-        Low Season Offer: <span className="text-white">€50 off</span> every retainer and standalone project — now onboarding selected global tour operators and DMCs.
+        Low Season Offer: <span className="text-white">{eur(off)} off</span> every retainer and standalone project — now onboarding selected global tour operators and DMCs.
       </span>
     </div>
   );
