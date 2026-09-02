@@ -1478,6 +1478,8 @@ function Footer() {
       </div>
       <div className="border-t border-white/5 py-4 text-center text-xs text-muted-foreground">
         © {new Date().getFullYear()} Travel BackOffice Partners. All rights reserved.
+        <span className="mx-2 opacity-40">·</span>
+        <Link to="/admin" className="opacity-60 hover:opacity-100 transition">Admin</Link>
       </div>
     </footer>
   );
