@@ -1,5 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
+import { PricesContext, usePrices, eur, type PriceMap } from "@/lib/prices";
+import { getSitePrices } from "@/lib/prices.functions";
 import {
   ArrowRight,
   CheckCircle2,
@@ -47,8 +50,15 @@ const PAGE_TITLE = "OTA & Bókun Back Office Support for Travel Agencies";
 const PAGE_DESCRIPTION =
   "Back office and OTA support for travel agencies, tour operators and DMCs: GetYourGuide, Viator and Booking.com listing management, Bókun setup, channel manager audits, PMS operations and custom travel software. Per-service pricing, invoice billing.";
 
+const pricesQuery = queryOptions({
+  queryKey: ["site-prices"],
+  queryFn: () => getSitePrices(),
+  staleTime: 60_000,
+});
+
 export const Route = createFileRoute("/")({
   component: Home,
+  loader: ({ context }) => context.queryClient.ensureQueryData(pricesQuery),
   head: () => ({
     meta: [
       { title: PAGE_TITLE },
@@ -151,8 +161,8 @@ type Service = {
   tag: string;
   summary: string;
   bullets: string[];
-  price: string;
-  priceNote: string;
+  price: (p: (id: string) => number) => string;
+  priceNote: (p: (id: string) => number) => string;
   accent: string; // css color token, e.g. "var(--teal-glow)"
 };
 
@@ -171,8 +181,8 @@ const SERVICES: Service[] = [
       "Partner & account manager relationship handling",
       "Weekly performance report",
     ],
-    price: "from €349 / month",
-    priceNote: "per platform · one-time setup €199",
+    price: (p) => `from ${eur(p("svc_ota_monthly"))} / month`,
+    priceNote: (p) => `per platform · one-time setup ${eur(p("svc_ota_setup"))}`,
     accent: "var(--teal-glow)",
   },
   {
@@ -189,8 +199,8 @@ const SERVICES: Service[] = [
       "Third-party integrations (payments, locks, CRM)",
       "Client & partner account management",
     ],
-    price: "from €449 / month",
-    priceNote: "per property · setup from €299",
+    price: (p) => `from ${eur(p("svc_pms_monthly"))} / month`,
+    priceNote: (p) => `per property · setup from ${eur(p("svc_pms_setup"))}`,
     accent: "var(--sky)",
   },
   {
@@ -207,8 +217,8 @@ const SERVICES: Service[] = [
       "Prioritized fix list with owner & ETA",
       "Optional 30-day implementation support",
     ],
-    price: "€599 one-time",
-    priceNote: "delivered in 5 business days",
+    price: (p) => `${eur(p("svc_audit"))} one-time`,
+    priceNote: () => "delivered in 5 business days",
     accent: "var(--amber)",
   },
   {
@@ -225,8 +235,8 @@ const SERVICES: Service[] = [
       "OTA ranking & conversion optimization",
       "Monthly strategy call + reporting",
     ],
-    price: "from €699 / month",
-    priceNote: "scoped per channel",
+    price: (p) => `from ${eur(p("svc_marketing"))} / month`,
+    priceNote: () => "scoped per channel",
     accent: "var(--violet)",
   },
   {
@@ -243,8 +253,8 @@ const SERVICES: Service[] = [
       "Website booking widgets & landing pages",
       "Maintenance and support retainer",
     ],
-    price: "quoted per scope",
-    priceNote: "fixed-price milestones · invoice billing",
+    price: () => "quoted per scope",
+    priceNote: () => "fixed-price milestones · invoice billing",
     accent: "var(--rose)",
   },
 ];
@@ -302,12 +312,10 @@ const EXCLUDED = [
 ];
 
 /* Configurator data */
-const LOW_SEASON_DISCOUNT = 50;
-
-const TIERS = [
-  { id: "starter", label: "Starter — up to 1,000 bookings/mo", price: 1499 },
-  { id: "growth", label: "Growth — 1,001 to 3,000 bookings/mo", price: 2999 },
-  { id: "scale", label: "Scale — 3,001+ enterprise", price: 4999 },
+const TIERS_BASE = [
+  { id: "starter", label: "Starter — up to 1,000 bookings/mo", priceKey: "tier_starter" },
+  { id: "growth", label: "Growth — 1,001 to 3,000 bookings/mo", priceKey: "tier_growth" },
+  { id: "scale", label: "Scale — 3,001+ enterprise", priceKey: "tier_scale" },
 ];
 const COVERAGE = [
   { id: "std", label: "Standard business hours (09:00–18:00)", mult: 1.0 },
@@ -315,17 +323,17 @@ const COVERAGE = [
   { id: "night", label: "Night shift monitoring", mult: 1.15 },
   { id: "247", label: "Full 24/7 coverage", mult: 1.4 },
 ];
-const MODULES = [
-  { id: "a", label: "Module A — Customer support & conversations", price: 0, note: "Baseline included" },
-  { id: "b", label: "Module B — Real-time ticket procurement", price: 150 },
-  { id: "c", label: "Module C — OTA channel & listing management", price: 200 },
-  { id: "d", label: "Module D — Website widgets & tech stack maintenance", price: 250 },
+const MODULES_BASE = [
+  { id: "a", label: "Module A — Customer support & conversations", priceKey: "mod_a", note: "Baseline included" },
+  { id: "b", label: "Module B — Real-time ticket procurement", priceKey: "mod_b" },
+  { id: "c", label: "Module C — OTA channel & listing management", priceKey: "mod_c" },
+  { id: "d", label: "Module D — Website widgets & tech stack maintenance", priceKey: "mod_d" },
 ];
-const STANDALONE = [
-  { id: "seo", label: "Listing SEO optimization", price: 350, unit: "per listing" },
-  { id: "bokun", label: "Bókun full setup", price: 650, unit: "flat setup" },
-  { id: "fast", label: "OTA fast approval setup", price: 250, unit: "per product upload" },
-  { id: "rescue", label: "Previous listing audit & rescue", price: 450, unit: "flat" },
+const STANDALONE_BASE = [
+  { id: "seo", label: "Listing SEO optimization", priceKey: "sa_seo", unit: "per listing" },
+  { id: "bokun", label: "Bókun full setup", priceKey: "sa_bokun", unit: "flat setup" },
+  { id: "fast", label: "OTA fast approval setup", priceKey: "sa_fast", unit: "per product upload" },
+  { id: "rescue", label: "Previous listing audit & rescue", priceKey: "sa_rescue", unit: "flat" },
 ];
 
 /* Articles — SEO-targeted operational content (Bókun, GetYourGuide, Viator, OTA, channel manager) */
@@ -455,7 +463,9 @@ const CAREER_YEARS = ["1–2 years", "3–5 years", "5+ senior lead"];
 /* ---------------- Component ---------------- */
 
 function Home() {
+  const { data: prices } = useSuspenseQuery(pricesQuery);
   return (
+    <PricesContext.Provider value={prices as PriceMap}>
     <div className="min-h-screen text-foreground">
       <AnnouncementBar />
       <Header />
@@ -650,6 +660,7 @@ function Services() {
 
 function ServiceCard({ s }: { s: Service }) {
   const Icon = s.icon;
+  const p = usePrices();
   const accent = s.accent;
   return (
     <Card
@@ -691,8 +702,8 @@ function ServiceCard({ s }: { s: Service }) {
           style={{ borderColor: `color-mix(in oklab, ${accent} 22%, transparent)` }}
         >
           <div>
-            <div className="font-display text-2xl font-bold" style={{ color: accent }}>{s.price}</div>
-            <div className="text-xs text-muted-foreground">{s.priceNote}</div>
+            <div className="font-display text-2xl font-bold" style={{ color: accent }}>{s.price(p)}</div>
+            <div className="text-xs text-muted-foreground">{s.priceNote(p)}</div>
           </div>
           <a
             href="#configurator"
@@ -776,6 +787,11 @@ function Research() {
 /* ---------------- Configurator ---------------- */
 
 function Configurator() {
+  const p = usePrices();
+  const TIERS = useMemo(() => TIERS_BASE.map((t) => ({ ...t, price: p(t.priceKey) })), [p]);
+  const MODULES = useMemo(() => MODULES_BASE.map((m) => ({ ...m, price: p(m.priceKey) })), [p]);
+  const STANDALONE = useMemo(() => STANDALONE_BASE.map((s) => ({ ...s, price: p(s.priceKey) })), [p]);
+  const LOW_SEASON_DISCOUNT = p("discount_low_season");
   const [mode, setMode] = useState<"retainer" | "standalone">("retainer");
   const [tierId, setTierId] = useState(TIERS[0].id);
   const [coverageId, setCoverageId] = useState(COVERAGE[0].id);
