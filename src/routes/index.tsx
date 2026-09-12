@@ -44,6 +44,7 @@ import logoEpicRoma from "@/assets/partners/Epic_ROma.jpg";
 import logoPremium from "@/assets/partners/Primium.jpg";
 import logoSrCity from "@/assets/partners/S_R_CITY.jpg";
 import logoHelloItalia from "@/assets/partners/web-logo-horizontal.png";
+import logoNordova from "@/assets/partners/nordova.png";
 
 const SITE_URL = "https://backofficepartners-eu.lovable.app";
 const PAGE_TITLE = "OTA & Bókun Back Office Support for Travel Agencies";
@@ -134,6 +135,7 @@ const SERVICE_PDF = "/travel-backoffice-partners-services.pdf";
 const TECH_PARTNERS = [
   { name: "Best in Rome Tour", logo: logoBestInRome },
   { name: "Avenza Tour", logo: logoAvenza },
+  { name: "Nordova Travel", logo: logoNordova },
 ];
 
 const SUPPORT_CLIENTS = [
